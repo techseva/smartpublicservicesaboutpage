@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About · Smart Public Services</title>
+    <meta name="theme-color" content="#0a5cff" />
+
+    <style>
+      :root {
+        --brand: #0a5cff;
+        --brand-600: #0a52e6;
+        --text: #111827;
+        --muted: #6b7280;
+        --bg: #f9fafb;
+        --card: #ffffff;
+        --border: #e5e7eb;
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        color: var(--text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Simulated status bar strip */
+      .status-bar { height: env(safe-area-inset-top, 0px); background: var(--brand); }
+
+      /* App bar */
+      .appbar {
+        position: sticky; top: 0; z-index: 10;
+        background: linear-gradient(0deg, var(--brand-600), var(--brand));
+        color: #fff; display: flex; align-items: center; gap: 12px;
+        padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+      .logo-wrap { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; outline: 1px dashed rgba(255,255,255,0.6); outline-offset: 2px; }
+      .logo-img { height: 24px; width: auto; object-fit: contain; display: block; }
+      .logo-fallback {
+        display: none; align-items: center; justify-content: center; width: 18px; height: 18px;
+        border-radius: 4px; background: rgba(255,255,255,0.15); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.4px;
+      }
+      .app-title { font-size: 18px; font-weight: 700; letter-spacing: 0.2px; }
+
+      /* Main content */
+      main { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+      .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 6px 24px rgba(16,24,40,0.06); overflow: hidden; }
+      .hero-art {
+        background: radial-gradient(1200px 400px at 10% -10%, rgba(10,92,255,0.25), rgba(10,92,255,0) 60%),
+                    conic-gradient(from 180deg at 50% 50%, rgba(255,255,255,0.6), rgba(255,255,255,0));
+        min-height: 140px;
+      }
+      .hero-body { padding: 20px 20px 8px; }
+      .headline { font-size: 24px; font-weight: 800; margin: 0 0 8px; }
+      .subhead { color: var(--muted); margin: 0; line-height: 1.6; }
+      .meta { display: flex; flex-wrap: wrap; gap: 12px 16px; padding: 16px 20px 20px; border-top: 1px solid var(--border); background: #fcfcfd; }
+      .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 999px; background: #fff; font-size: 14px; }
+      .chip .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--brand); }
+
+      .section { margin-top: 20px; padding: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; }
+      .section h2 { margin: 0 0 10px; font-size: 18px; }
+      .section p { margin: 0 0 8px; color: var(--muted); }
+      .features { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 8px; }
+      .feature { padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+
+      footer { max-width: 960px; margin: 24px auto 40px; padding: 0 16px; color: var(--muted); font-size: 14px; text-align: center; }
+
+      @media (min-width: 720px) {
+        .headline { font-size: 28px; }
+        .features { grid-template-columns: repeat(2, 1fr); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="status-bar"></div>
+    <header class="appbar" role="banner">
+      <div class="logo-wrap" aria-hidden="true">
+        <img id="app-logo" src="/smartlogo.png" alt="Smart Public Services logo" class="logo-img" aria-hidden="true"
+             onerror="this.style.display='none'; var f=document.getElementById('logo-fallback'); if(f) f.style.display='inline-flex'; console.error('Logo failed to load:', this.src);" />
+        <span id="logo-fallback" class="logo-fallback" aria-hidden="true">SPS</span>
+      </div>
+      <div class="app-title">About</div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="hero-art" aria-hidden="true"></div>
+        <div class="hero-body">
+          <h1 class="headline">Smart Public Services</h1>
+          <p class="subhead">
+            A modern platform to streamline access to essential public services. Built with a focus on simplicity,
+            accessibility, and trust.
+          </p>
+          <div class="meta">
+            <span class="chip"><span class="dot"></span> Version <strong id="app-version">1.0.0</strong></span>
+            <span class="chip">Package <code>com.smartpublicservices</code></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="mission-title">
+        <h2 id="mission-title">Our mission</h2>
+        <p>
+          Empower citizens to discover and use public services with minimal friction. From quick information lookup
+          to guided service flows, Smart Public Services brings everything under one roof.
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="features-title">
+        <h2 id="features-title">Highlights</h2>
+        <div class="features">
+          <div class="feature">Unified access to multiple departments and services</div>
+          <div class="feature">Clear guidance and step-by-step flows</div>
+          <div class="feature">Mobile-first, accessible design</div>
+          <div class="feature">Secure and privacy-conscious</div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="contact-title">
+        <h2 id="contact-title">Contact</h2>
+        <p>For support or feedback, email us at <a href="mailto:arunkumarcommunications55@gmail.com">arunkumarcommunications55@gmail.com</a></p>
+      </section>
+    </main>
+
+    <footer>
+      © <span id="year"></span> Smart Public Services. All rights reserved.
+    </footer>
+
+    <script>
+      // Match Android AboutActivity behavior
+      document.getElementById('year').textContent = new Date().getFullYear();
+      document.getElementById('app-version').textContent = '1.0.0';
+    </script>
+  </body>
+</html>
