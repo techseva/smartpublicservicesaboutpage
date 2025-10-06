@@ -37,8 +37,8 @@
         color: #fff; display: flex; align-items: center; gap: 12px;
         padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       }
-      .logo-wrap { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; outline: 1px dashed rgba(255,255,255,0.6); outline-offset: 2px; }
-      .logo-img { height: 24px; width: auto; object-fit: contain; display: block; }
+      .logo-wrap { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; outline: 1px dashed rgba(255,255,255,0.6); outline-offset: 2px; }
+      .logo-img { height: 32px; width: auto; object-fit: contain; display: block; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
       .logo-fallback {
         display: none; align-items: center; justify-content: center; width: 18px; height: 18px;
         border-radius: 4px; background: rgba(255,255,255,0.15); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.4px;
@@ -49,11 +49,20 @@
       main { max-width: 960px; margin: 24px auto; padding: 0 16px; }
       .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 6px 24px rgba(16,24,40,0.06); overflow: hidden; }
       .hero-art {
+        position: relative;
         background: radial-gradient(1200px 400px at 10% -10%, rgba(10,92,255,0.25), rgba(10,92,255,0) 60%),
                     conic-gradient(from 180deg at 50% 50%, rgba(255,255,255,0.6), rgba(255,255,255,0));
-        min-height: 140px;
+        min-height: 160px;
+      }
+      .hero-art::after {
+        content: "";
+        position: absolute; inset: 0;
+        background: url('./smartlogo.png') center/140px no-repeat;
+        opacity: 1; pointer-events: none;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
       }
       .hero-body { padding: 20px 20px 8px; }
+      .hero-logo { display: block; height: 72px; width: auto; margin: 0 0 10px; }
       .headline { font-size: 24px; font-weight: 800; margin: 0 0 8px; }
       .subhead { color: var(--muted); margin: 0; line-height: 1.6; }
       .meta { display: flex; flex-wrap: wrap; gap: 12px 16px; padding: 16px 20px 20px; border-top: 1px solid var(--border); background: #fcfcfd; }
@@ -70,22 +79,20 @@
 
       @media (min-width: 720px) {
         .headline { font-size: 28px; }
-        .features { grid-template-columns: repeat(2, 1fr); }
+        .hero-art::after { background-size: 170px; }
       }
     </style>
   </head>
   <body>
     <div class="status-bar"></div>
     <header class="appbar" role="banner">
-      <div class="logo-wrap" aria-hidden="true">
-        <img id="app-logo" src="/smartlogo.png" alt="Smart Public Services logo" class="logo-img" aria-hidden="true"
+      <div class="logo-wrap">
+        <img id="app-logo" src="./smartlogo.png" alt="Smart Public Services logo" class="logo-img"
              onerror="this.style.display='none'; var f=document.getElementById('logo-fallback'); if(f) f.style.display='inline-flex'; console.error('Logo failed to load:', this.src);" />
         <span id="logo-fallback" class="logo-fallback" aria-hidden="true">SPS</span>
       </div>
       <div class="app-title">About</div>
     </header>
-
-    <main>
       <section class="card">
         <div class="hero-art" aria-hidden="true"></div>
         <div class="hero-body">
@@ -133,6 +140,22 @@
       // Match Android AboutActivity behavior
       document.getElementById('year').textContent = new Date().getFullYear();
       document.getElementById('app-version').textContent = '1.0.0';
+
+      // Logo load diagnostics
+      (function(){
+        var img = document.getElementById('app-logo');
+        if (!img) return;
+        function report(status){
+          try { console.log('[Logo]', status, { src: img.currentSrc || img.src, complete: img.complete, naturalWidth: img.naturalWidth }); } catch(e) {}
+        }
+        if (img.complete) {
+          if (img.naturalWidth > 0) { img.style.display = 'block'; report('loaded (complete)'); }
+          else { report('error (complete)'); }
+        } else {
+          img.addEventListener('load', function(){ img.style.display = 'block'; report('loaded'); });
+          img.addEventListener('error', function(){ report('error'); });
+        }
+      })();
     </script>
   </body>
 </html>
